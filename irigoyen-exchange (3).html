@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irigoyen Exchange — Cotización de USDT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070D0A;
+    --panel: #0F1E16;
+    --panel-2: #0C1712;
+    --ink: #F5F7F6;
+    --ink-soft: #9FB0A6;
+    --ink-faint: #6B7D73;
+    --accent: #22C55E;
+    --accent-2: #34D399;
+    --accent-grad: linear-gradient(135deg, #16A34A, #34D399);
+    --accent-soft: rgba(34,197,94,0.12);
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(52,211,153,0.3);
+    --radius: 20px;
+    --radius-full: 999px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Inter',sans-serif; font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{ font-family:'Sora', sans-serif; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  a{ color:inherit; }
+
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 28px; max-width:1080px; margin:0 auto;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .mark{
+    width:32px; height:32px; border-radius:9px; background:var(--accent-grad);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sora',sans-serif; font-weight:700; font-size:13px; color:#06120C;
+  }
+  .brand-name{ font-family:'Sora',sans-serif; font-weight:700; font-size:16px; letter-spacing:0.01em; }
+  .brand-name span{ color:var(--accent-2); }
+  nav{ display:flex; align-items:center; gap:28px; font-size:14.5px; color:var(--ink-soft); }
+  nav a{ text-decoration:none; }
+  nav a:hover{ color:var(--ink); }
+  .nav-cta{
+    background:var(--accent-grad); color:#06120C; padding:11px 20px; border-radius:var(--radius-full);
+    font-weight:700; font-size:12.5px; letter-spacing:0.03em; text-decoration:none;
+  }
+  .lock-btn{
+    background:none; border:1px solid var(--border); color:var(--ink-faint);
+    width:32px; height:32px; border-radius:50%; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .lock-btn:hover{ border-color:var(--border-accent); color:var(--accent-2); }
+  @media (max-width: 800px){ nav .nav-links{ display:none; } }
+
+  /* Hero */
+  .hero{
+    padding:76px 0 0; text-align:center;
+    background:radial-gradient(ellipse 900px 480px at 50% 0%, rgba(34,197,94,0.16), transparent 70%);
+  }
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent-soft); border:1px solid var(--border-accent); color:var(--accent-2);
+    padding:8px 18px; border-radius:var(--radius-full); font-size:13px; font-weight:600; margin-bottom:28px;
+  }
+  .badge .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent-2); }
+  .hero h1{
+    font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(36px,6.5vw,58px);
+    line-height:1.05; margin:0 0 20px; letter-spacing:-0.01em;
+  }
+  .hero h1 .grad{
+    background:var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.sub{ color:var(--ink-soft); max-width:480px; margin:0 auto 32px; font-size:17px; }
+  .hero-ctas{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:56px; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent-grad); color:#06120C;
+    padding:14px 30px; border-radius:var(--radius-full); text-decoration:none;
+    font-size:14.5px; font-weight:700; border:none; cursor:pointer;
+  }
+  .btn:hover{ filter:brightness(1.06); }
+  .btn-outline{ background:none; color:var(--accent-2); border:1.5px solid var(--border-accent); }
+  .btn-outline:hover{ background:var(--accent-soft); }
+  .btn-block{ width:100%; justify-content:center; }
+
+  section{ padding:60px 0; }
+  h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:28px; margin:0 0 8px; text-align:center; }
+  .lede{ color:var(--ink-soft); max-width:480px; margin:0 auto 36px; text-align:center; font-size:15.5px; }
+
+  .panel-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:32px;
+  }
+
+  /* Cotizacion */
+  .cotiz-outer{ max-width:900px; margin:0 auto; }
+  .cotiz-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+  @media (max-width:600px){ .cotiz-grid{ grid-template-columns:1fr; } }
+  .cotiz-card{ background:var(--panel-2); border:1px solid var(--border); border-radius:14px; padding:22px; }
+  .cotiz-card .tag{ display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; margin-bottom:14px; }
+  .cotiz-card .tag svg{ color:var(--accent-2); }
+  .cotiz-card .val{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,38px); font-variant-numeric:tabular-nums; }
+  .cotiz-card .who{ font-size:12px; color:var(--ink-faint); letter-spacing:0.05em; margin-top:6px; text-transform:uppercase; }
+  .cotiz-warn{
+    margin-top:16px; border:1px solid var(--border); border-radius:12px; padding:14px 18px;
+    text-align:center; font-size:13.5px; color:var(--ink-soft);
+  }
+  .cotiz-meta{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:16px; font-size:13px; color:var(--ink-faint); }
+  .cotiz-meta span{ display:flex; align-items:center; gap:6px; }
+
+  /* Calculadora */
+  .calc-box{ max-width:640px; margin:0 auto; text-align:left; }
+  .calc-box h3{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:0 0 6px; }
+  .calc-box .sub{ color:var(--ink-soft); font-size:14.5px; margin:0 0 22px; }
+  .calc-toggle{ display:flex; background:var(--panel-2); border:1px solid var(--border); border-radius:var(--radius-full); padding:4px; margin-bottom:22px; }
+  .calc-toggle button{
+    flex:1; padding:11px; background:none; border:none; color:var(--ink-soft);
+    font-size:13px; font-weight:700; cursor:pointer; border-radius:var(--radius-full); letter-spacing:0.02em;
+  }
+  .calc-toggle button.active{ background:var(--accent-grad); color:#06120C; }
+  .calc-inputs{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px; }
+  @media (max-width:480px){ .calc-inputs{ grid-template-columns:1fr; } }
+  .calc-field label{ display:block; font-size:12.5px; font-weight:600; color:var(--ink-soft); margin-bottom:7px; }
+  .calc-field input{
+    width:100%; background:var(--panel-2); border:1px solid var(--border); color:var(--ink);
+    padding:13px 14px; border-radius:12px; font-size:15px; font-family:'Inter',sans-serif; outline:none;
+  }
+  .calc-field input:focus{ border-color:var(--border-accent); }
+  .calc-summary{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; background:var(--panel-2);
+    border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:20px;
+  }
+  .calc-summary div div:first-child{ font-size:11px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; }
+  .calc-summary div div:last-child{ font-family:'Sora',sans-serif; font-weight:800; font-size:16px; font-variant-numeric:tabular-nums; }
+  .calc-summary .total div:last-child{ color:var(--accent-2); }
+  .calc-note{ font-size:12.5px; color:var(--ink-faint); margin-top:14px; text-align:center; }
+
+  /* Why grid */
+  .why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:760px){ .why-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .why-grid{ grid-template-columns:1fr; } }
+  .why-item{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+  .icon-circle{
+    width:38px; height:38px; border-radius:50%; background:var(--accent-soft); color:var(--accent-2);
+    display:flex; align-items:center; justify-content:center; margin-bottom:14px;
+  }
+  .why-item h3{ font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; margin:0 0 6px; }
+  .why-item p{ margin:0; color:var(--ink-soft); font-size:13.5px; line-height:1.55; }
+
+  /* Steps */
+  .steps-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:720px){ .steps-grid{ grid-template-columns:1fr; } }
+  .step-card{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+  .step-num{
+    font-family:'Sora',sans-serif; font-weight:800; font-size:34px; color:var(--accent-2);
+    opacity:0.55; margin-bottom:10px;
+  }
+  .step-title{ font-size:15.5px; margin:0 0 6px; font-weight:700; font-family:'Sora',sans-serif; }
+  .step-desc{ color:var(--ink-soft); font-size:13.5px; line-height:1.55; margin:0; }
+
+  /* Asistente */
+  .chat-outer{ max-width:640px; margin:0 auto; }
+  .chat-head{ display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+  .chat-head h3{ font-family:'Sora',sans-serif; font-weight:700; font-size:19px; margin:0; }
+  .chat-head p{ margin:2px 0 0; color:var(--ink-soft); font-size:13.5px; }
+  .chat-log{ display:flex; flex-direction:column; gap:12px; margin-bottom:18px; max-height:320px; overflow-y:auto; }
+  .msg{ max-width:88%; font-size:14px; line-height:1.5; padding:12px 16px; border-radius:14px; }
+  .msg.user{ align-self:flex-end; background:var(--accent-grad); color:#06120C; font-weight:600; border-radius:14px 14px 3px 14px; }
+  .msg.bot{ align-self:flex-start; background:var(--panel-2); border:1px solid var(--border); border-radius:14px 14px 14px 3px; }
+  .msg.typing{ color:var(--ink-faint); font-style:italic; }
+  .chat-suggest{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .chip{ font-size:12.5px; color:var(--ink-soft); border:1px solid var(--border); padding:8px 14px; border-radius:var(--radius-full); cursor:pointer; background:var(--panel-2); }
+  .chip:hover{ border-color:var(--border-accent); color:var(--ink); }
+  .chat-input-row{ display:flex; gap:10px; margin-bottom:14px; }
+  .chat-input-row input{
+    flex:1; background:var(--panel-2); border:1px solid var(--border); color:var(--ink);
+    padding:13px 16px; border-radius:var(--radius-full); font-family:'Inter',sans-serif; font-size:14px; outline:none;
+  }
+  .chat-input-row input:focus{ border-color:var(--border-accent); }
+  .chat-input-row button{
+    background:var(--accent-grad); border:none; color:#06120C; width:44px; height:44px; border-radius:50%;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+
+  /* FAQ */
+  .faq-outer{ max-width:760px; margin:0 auto; }
+  .faq-item{
+    background:var(--panel); border:1px solid var(--border); border-radius:16px; margin-bottom:12px; overflow:hidden;
+  }
+  .faq-item summary{
+    padding:19px 22px; cursor:pointer; font-size:15px; font-weight:600; list-style:none;
+    display:flex; justify-content:space-between; align-items:center; font-family:'Sora',sans-serif;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary svg{ color:var(--accent-2); transition:transform .2s; flex-shrink:0; }
+  .faq-item[open] summary svg{ transform:rotate(180deg); }
+  .faq-item p{ margin:0; padding:0 22px 20px; color:var(--ink-soft); font-size:14px; line-height:1.6; }
+
+  /* Footer */
+  footer{ background:var(--panel-2); border-top:1px solid var(--border); padding:52px 0 26px; margin-top:20px; }
+  .foot-grid{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:32px; }
+  @media (max-width:700px){ .foot-grid{ grid-template-columns:1fr; } }
+  .foot-name{ font-family:'Sora',sans-serif; font-weight:700; font-size:17px; margin-bottom:6px; }
+  .foot-name span{ color:var(--accent-2); }
+  .foot-sub{ color:var(--ink-faint); font-size:13.5px; }
+  .foot-col-title{ font-family:'Sora',sans-serif; font-weight:700; font-size:14px; margin-bottom:12px; }
+  .foot-links{ display:flex; flex-direction:column; gap:10px; font-size:13.5px; }
+  .foot-links a{ color:var(--ink-soft); text-decoration:none; display:flex; align-items:center; gap:8px; }
+  .foot-links a:hover{ color:var(--accent-2); }
+  .foot-links a svg{ flex-shrink:0; }
+  .foot-legal{ margin-top:36px; padding-top:20px; border-top:1px solid var(--border); font-size:12px; color:var(--ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .foot-admin{ color:var(--ink-faint); font-size:12px; text-decoration:none; background:none; border:none; cursor:pointer; }
+  .foot-admin:hover{ color:var(--ink-soft); }
+
+  /* Modal */
+  .overlay{ position:fixed; inset:0; background:rgba(4,10,7,0.85); display:none; align-items:center; justify-content:center; z-index:50; padding:20px; }
+  .overlay.open{ display:flex; }
+  .modal{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); width:100%; max-width:380px; padding:28px; max-height:90vh; overflow-y:auto; }
+  .modal h3{ font-family:'Sora',sans-serif; font-weight:700; font-size:20px; margin:0 0 4px; }
+  .modal .sub{ color:var(--ink-faint); font-size:13px; margin:0 0 22px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:12.5px; color:var(--ink-soft); margin-bottom:6px; }
+  .field input{ width:100%; background:var(--panel-2); border:1px solid var(--border); color:var(--ink); padding:11px 14px; border-radius:10px; font-size:14px; font-family:'Inter',sans-serif; outline:none; }
+  .field input:focus{ border-color:var(--border-accent); }
+  .modal-actions{ display:flex; gap:10px; margin-top:22px; }
+  .modal-actions .btn{ flex:1; justify-content:center; }
+  .close-x{ float:right; background:none; border:none; color:var(--ink-faint); cursor:pointer; font-size:18px; }
+  .status-msg{ font-size:13px; margin-top:10px; min-height:16px; }
+  .status-msg.err{ color:#F0A0A0; }
+  .status-msg.ok{ color:var(--accent-2); }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#inicio">
+    <div class="mark">IE</div>
+    <div class="brand-name">IRIGOYEN <span>EXCHANGE</span></div>
+  </a>
+  <nav>
+    <div class="nav-links" style="display:flex; gap:28px;">
+      <a href="#cotizacion">Cotización</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#faq">Preguntas frecuentes</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a class="nav-cta" href="#calculadora">OPERAR AHORA</a>
+    <button class="lock-btn" onclick="openAdminModal()" title="Acceso administrador">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    </button>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span> Compra y venta de USDT en Paraguay</span>
+    <h1 class="display">IRIGOYEN <span class="grad">EXCHANGE</span></h1>
+    <p class="sub">Compra y venta de USDT de forma rápida, segura y transparente.</p>
+    <div class="hero-ctas">
+      <a class="btn" href="#calculadora" onclick="setMode('comprar')">COMPRAR USDT</a>
+      <a class="btn btn-outline" href="#calculadora" onclick="setMode('vender')">VENDER USDT</a>
+    </div>
+  </div>
+</section>
+
+<section id="cotizacion">
+  <div class="wrap cotiz-outer">
+    <span class="badge" style="display:flex; margin:0 auto 0; width:fit-content;"><span class="dot"></span> COTIZACIÓN ACTUAL</span>
+    <div class="cotiz-grid">
+      <div class="cotiz-card">
+        <div class="tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7l10 10M17 7v10H7"/></svg> Nosotros compramos USDT</div>
+        <div class="val display" id="compraValue">Gs. —</div>
+        <div class="who">Vos vendés</div>
+      </div>
+      <div class="cotiz-card">
+        <div class="tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 17L7 7M7 17V7h10"/></svg> Nosotros vendemos USDT</div>
+        <div class="val display" id="ventaValue">Gs. —</div>
+        <div class="who">Vos comprás</div>
+      </div>
+    </div>
+    <div class="cotiz-warn">Cotización referencial. Confirmá el precio vigente por WhatsApp antes de operar.</div>
+    <div class="cotiz-meta">
+      <span id="updatedText">Cargando cotización...</span>
+      <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.5 15"/></svg> se actualiza cuando el administrador la modifica</span>
+    </div>
+  </div>
+</section>
+
+<section id="calculadora">
+  <div class="wrap">
+    <div class="panel-card calc-box">
+      <h3 class="display">Calculadora</h3>
+      <p class="sub">Calculá tu operación en tiempo real con la cotización vigente.</p>
+      <div class="calc-toggle">
+        <button id="btnComprar" class="active" onclick="setMode('comprar')">COMPRAR USDT</button>
+        <button id="btnVender" onclick="setMode('vender')">VENDER USDT</button>
+      </div>
+      <div class="calc-inputs">
+        <div class="calc-field">
+          <label>Cantidad en USDT</label>
+          <input type="number" id="inputUsdt" value="500" oninput="calcFromUsdt()">
+        </div>
+        <div class="calc-field">
+          <label>Monto en guaraníes</label>
+          <input type="number" id="inputGs" oninput="calcFromGs()">
+        </div>
+      </div>
+      <div class="calc-summary">
+        <div><div id="calcModeLabel">QUERÉS COMPRAR</div><div id="calcAmount">500 USDT</div></div>
+        <div><div>COTIZACIÓN</div><div id="calcRate">Gs. —</div></div>
+        <div class="total"><div>TOTAL</div><div id="calcTotal">Gs. —</div></div>
+      </div>
+      <a class="btn btn-block" id="calcWhatsapp" href="#" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" opacity="0"/><path d="M17.5 14.4c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10.1 9 9.7 8 9.5 7.5c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.5-.3z"/></svg>
+        CONTINUAR POR WHATSAPP
+      </a>
+      <p class="calc-note">Las cotizaciones pueden variar. Confirmá el precio vigente antes de operar.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="display">Por qué operar con nosotros</h2>
+    <p class="lede">&nbsp;</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="icon-circle"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>Operaciones rápidas</h3><p>Cerramos tu operación sin vueltas ni demoras.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon-circle"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-4h3z"/><path d="M3 19a2 2 0 0 0 2 2h1v-4H3z"/></svg></div>
+        <h3>Atención personalizada</h3><p>Un asesor te acompaña en todo el proceso.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon-circle"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-3-3-4 4"/></svg></div>
+        <h3>Cotización transparente</h3><p>Precio de compra y venta siempre a la vista.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon-circle"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <h3>Compra y venta de USDT</h3><p>Operá en ambos sentidos con la misma agilidad.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon-circle"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <h3>Soporte directo por WhatsApp</h3><p>Escribinos y te respondemos al instante.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="wrap">
+    <h2 class="display">Cómo funciona</h2>
+    <p class="lede">&nbsp;</p>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num display">01</div><p class="step-title">Consultá la cotización</p><p class="step-desc">Mirá el precio vigente de compra y venta de USDT.</p></div>
+      <div class="step-card"><div class="step-num display">02</div><p class="step-title">Elegí comprar o vender</p><p class="step-desc">Usá la calculadora para conocer el total exacto.</p></div>
+      <div class="step-card"><div class="step-num display">03</div><p class="step-title">Contactanos por WhatsApp</p><p class="step-desc">Un asesor completa la operación con vos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="asistente">
+  <div class="wrap">
+    <div class="panel-card chat-outer">
+      <div class="chat-head">
+        <div class="icon-circle" style="margin-bottom:0; width:44px; height:44px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"/><circle cx="8.5" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14" r="1.2" fill="currentColor" stroke="none"/><path d="M12 8V4M9 4h6"/></svg></div>
+        <div><h3 class="display">Asistente virtual</h3><p>Consultas sobre cotización, compra, venta y cálculos.</p></div>
+      </div>
+      <div class="chat-log" id="chatLog"></div>
+      <div class="chat-suggest">
+        <button class="chip" onclick="askSuggested('¿Cómo compro USDT?')">¿Cómo compro USDT?</button>
+        <button class="chip" onclick="askSuggested('¿Cuál es la cotización actual?')">¿Cuál es la cotización actual?</button>
+        <button class="chip" onclick="askSuggested('¿Qué necesito para operar?')">¿Qué necesito para operar?</button>
+      </div>
+      <div class="chat-input-row">
+        <input id="chatInput" type="text" placeholder="Escribí tu consulta..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button onclick="sendChat()"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
+      </div>
+      <a class="btn btn-outline btn-block" id="chatWhatsapp" href="#" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Hablar con un asesor por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap faq-outer">
+    <h2 class="display">Preguntas frecuentes</h2>
+    <p class="lede">&nbsp;</p>
+    <details class="faq-item">
+      <summary>¿Cómo compro USDT? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <p>Escribinos con el monto que querés comprar. Te confirmamos el total en guaraníes según la cotización vigente, hacés la transferencia y te acreditamos los USDT en tu wallet.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cómo vendo USDT? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <p>Nos indicás cuántos USDT querés vender. Te confirmamos el monto en guaraníes, nos transferís los USDT y te depositamos el pago de inmediato.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿La cotización cambia durante el día? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <p>Sí, puede variar según el mercado. Siempre vas a ver el precio vigente en esta página antes de confirmar tu operación.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cómo sé cuál es el precio vigente? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <p>El precio de compra y venta se actualiza en la sección de cotización de esta misma página, con el horario de la última actualización.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cómo puedo contactar a Irigoyen Exchange? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <p>Por WhatsApp o Instagram. Los enlaces están en el pie de página.</p>
+    </details>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-name display">IRIGOYEN <span>EXCHANGE</span></div>
+        <div class="foot-sub">Compra y venta de USDT</div>
+      </div>
+      <div>
+        <div class="foot-col-title">Contacto</div>
+        <div class="foot-links">
+          <a id="footWhatsapp" href="#" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span id="footWhatsappText">WhatsApp</span></a>
+          <a id="footInstagram" href="#" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span id="footInstagramText">Instagram</span></a>
+        </div>
+      </div>
+      <div>
+        <div class="foot-col-title">Aviso</div>
+        <p class="foot-sub" style="line-height:1.6;">Las cotizaciones pueden variar. Confirme siempre el precio vigente antes de realizar una operación.</p>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>© 2026 Irigoyen Exchange. Todos los derechos reservados.</span>
+      <button class="foot-admin" onclick="openAdminModal()">Acceso administrador</button>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="adminOverlay">
+  <div class="modal" id="adminModalBox"></div>
+</div>
+
+<script>
+const STORAGE_KEY_RATES = 'irigoyen:rates';
+const STORAGE_KEY_CONFIG = 'irigoyen:config';
+const DEFAULT_PASSWORD = 'irigoyen2026';
+
+let rates = { compra: 5830, venta: 5960, updated: null };
+let config = { password: DEFAULT_PASSWORD, whatsapp: '595986421779', instagram: 'irigoyenex.py' };
+let adminLoggedIn = false;
+let chatHistory = [];
+let mode = 'comprar';
+
+function fmt(n){ return Math.round(n).toLocaleString('es-PY'); }
+
+function renderRates(){
+  document.getElementById('compraValue').textContent = 'Gs. ' + fmt(rates.compra);
+  document.getElementById('ventaValue').textContent = 'Gs. ' + fmt(rates.venta);
+  if(rates.updated){
+    const d = new Date(rates.updated);
+    const timeStr = d.toLocaleString('es-PY', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    document.getElementById('updatedText').textContent = 'Última actualización: ' + timeStr;
+  } else {
+    document.getElementById('updatedText').textContent = 'Cotización aún sin cargar';
+  }
+  calcFromUsdt();
+}
+
+function renderContact(){
+  const wa = (config.whatsapp || '').replace(/\D/g,'');
+  const ig = (config.instagram || '').replace('@','');
+  document.getElementById('footWhatsapp').href = wa ? ('https://wa.me/' + wa) : '#';
+  document.getElementById('footWhatsappText').textContent = wa ? ('WhatsApp +' + wa) : 'WhatsApp';
+  document.getElementById('footInstagram').href = ig ? ('https://instagram.com/' + ig) : '#';
+  document.getElementById('footInstagramText').textContent = ig ? ('Instagram @' + ig) : 'Instagram';
+  document.getElementById('chatWhatsapp').href = wa ? ('https://wa.me/' + wa + '?text=' + encodeURIComponent('Hola Irigoyen Exchange, necesito hablar con un asesor.')) : '#contacto';
+  calcFromUsdt();
+}
+
+async function loadData(){
+  try{
+    const r = await window.storage.get(STORAGE_KEY_RATES, true);
+    if(r && r.value){ rates = JSON.parse(r.value); }
+  }catch(e){}
+  try{
+    const c = await window.storage.get(STORAGE_KEY_CONFIG, true);
+    if(c && c.value){ config = JSON.parse(c.value); }
+    else{ await window.storage.set(STORAGE_KEY_CONFIG, JSON.stringify(config), true); }
+  }catch(e){
+    try{ await window.storage.set(STORAGE_KEY_CONFIG, JSON.stringify(config), true); }catch(e2){}
+  }
+  renderRates();
+  renderContact();
+}
+loadData();
+
+/* ---------- Calculadora ---------- */
+function setMode(m){
+  mode = m;
+  document.getElementById('btnComprar').classList.toggle('active', m==='comprar');
+  document.getElementById('btnVender').classList.toggle('active', m==='vender');
+  document.getElementById('calcModeLabel').textContent = m==='comprar' ? 'QUERÉS COMPRAR' : 'QUERÉS VENDER';
+  calcFromUsdt();
+}
+
+function currentRate(){ return mode === 'comprar' ? rates.venta : rates.compra; }
+
+function calcFromUsdt(){
+  const usdtEl = document.getElementById('inputUsdt');
+  if(!usdtEl) return;
+  const usdt = parseFloat(usdtEl.value) || 0;
+  const rate = currentRate();
+  const total = usdt * rate;
+  document.getElementById('inputGs').value = total ? Math.round(total) : '';
+  updateCalcSummary(usdt, total, rate);
+}
+
+function calcFromGs(){
+  const gs = parseFloat(document.getElementById('inputGs').value) || 0;
+  const rate = currentRate();
+  const usdt = rate ? gs / rate : 0;
+  document.getElementById('inputUsdt').value = usdt ? (Math.round(usdt*100)/100) : '';
+  updateCalcSummary(usdt, gs, rate);
+}
+
+function updateCalcSummary(usdt, total, rate){
+  document.getElementById('calcAmount').textContent = (Math.round(usdt*100)/100) + ' USDT';
+  document.getElementById('calcRate').textContent = 'Gs. ' + fmt(rate);
+  document.getElementById('calcTotal').textContent = 'Gs. ' + fmt(total);
+  const wa = (config.whatsapp || '').replace(/\D/g,'');
+  const accion = mode === 'comprar' ? 'comprar' : 'vender';
+  const msg = 'Hola Irigoyen Exchange, quiero ' + accion + ' ' + (Math.round(usdt*100)/100) + ' USDT. Vi una cotización de Gs. ' + fmt(rate) + ' en la página. Total aproximado: Gs. ' + fmt(total) + '.';
+  const link = document.getElementById('calcWhatsapp');
+  link.href = wa ? ('https://wa.me/' + wa + '?text=' + encodeURIComponent(msg)) : '#contacto';
+}
+
+/* ---------- Admin ---------- */
+function openAdminModal(){
+  document.getElementById('adminOverlay').classList.add('open');
+  if(adminLoggedIn){ renderAdminPanel(); } else { renderLoginForm(); }
+}
+function closeAdminModal(){ document.getElementById('adminOverlay').classList.remove('open'); }
+
+function renderLoginForm(){
+  document.getElementById('adminModalBox').innerHTML = `
+    <button class="close-x" onclick="closeAdminModal()">&times;</button>
+    <h3>Acceso administrador</h3>
+    <p class="sub">Ingresá la contraseña para actualizar la cotización.</p>
+    <div class="field"><label>Contraseña</label><input type="password" id="adminPassInput" onkeydown="if(event.key==='Enter')tryLogin()"></div>
+    <div class="status-msg err" id="loginStatus"></div>
+    <div class="modal-actions"><button class="btn" onclick="tryLogin()">Ingresar</button></div>
+  `;
+  document.getElementById('adminPassInput').focus();
+}
+
+function tryLogin(){
+  const val = document.getElementById('adminPassInput').value;
+  if(val === config.password){ adminLoggedIn = true; renderAdminPanel(); }
+  else{ document.getElementById('loginStatus').textContent = 'Contraseña incorrecta.'; }
+}
+
+function renderAdminPanel(){
+  document.getElementById('adminModalBox').innerHTML = `
+    <button class="close-x" onclick="closeAdminModal()">&times;</button>
+    <h3>Actualizar cotización</h3>
+    <p class="sub">Estos valores se publican de inmediato en la web.</p>
+    <div class="field"><label>Compra (Gs. por USDT)</label><input type="number" id="adminCompra" value="${rates.compra}"></div>
+    <div class="field"><label>Venta (Gs. por USDT)</label><input type="number" id="adminVenta" value="${rates.venta}"></div>
+    <div class="field"><label>WhatsApp (con código de país, sin +)</label><input type="text" id="adminWhatsapp" value="${config.whatsapp || ''}"></div>
+    <div class="field"><label>Instagram (usuario, sin @)</label><input type="text" id="adminInstagram" value="${(config.instagram||'').replace('@','')}"></div>
+    <div class="field"><label>Cambiar contraseña (opcional)</label><input type="text" id="adminNewPass" placeholder="dejar en blanco para no cambiarla"></div>
+    <div class="status-msg ok" id="adminStatus"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="adminLoggedIn=false; renderLoginForm();">Cerrar sesión</button>
+      <button class="btn" onclick="saveAdmin()">Guardar</button>
+    </div>
+  `;
+}
+
+async function saveAdmin(){
+  const compra = parseFloat(document.getElementById('adminCompra').value);
+  const venta = parseFloat(document.getElementById('adminVenta').value);
+  const whatsapp = document.getElementById('adminWhatsapp').value.trim();
+  const instagram = document.getElementById('adminInstagram').value.trim();
+  const newPass = document.getElementById('adminNewPass').value.trim();
+  const statusEl = document.getElementById('adminStatus');
+
+  if(isNaN(compra) || isNaN(venta)){
+    statusEl.className = 'status-msg err'; statusEl.textContent = 'Ingresá valores numéricos válidos.'; return;
+  }
+  rates = { compra, venta, updated: new Date().toISOString() };
+  config.whatsapp = whatsapp; config.instagram = instagram;
+  if(newPass){ config.password = newPass; }
+
+  try{
+    await window.storage.set(STORAGE_KEY_RATES, JSON.stringify(rates), true);
+    await window.storage.set(STORAGE_KEY_CONFIG, JSON.stringify(config), true);
+    statusEl.className = 'status-msg ok'; statusEl.textContent = 'Cotización actualizada.';
+    renderRates(); renderContact();
+  }catch(e){
+    statusEl.className = 'status-msg err'; statusEl.textContent = 'No se pudo guardar. Intentá de nuevo.';
+  }
+}
+
+/* ---------- Chat / asistente IA ---------- */
+function appendMsg(text, cls){
+  const log = document.getElementById('chatLog');
+  const div = document.createElement('div');
+  div.className = 'msg ' + cls;
+  div.textContent = text;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+  return div;
+}
+
+function askSuggested(text){ document.getElementById('chatInput').value = text; sendChat(); }
+
+async function sendChat(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  input.value = '';
+  appendMsg(text, 'user');
+  chatHistory.push({ role:'user', content:text });
+  const typingEl = appendMsg('Escribiendo...', 'bot typing');
+
+  const systemPrompt = `Sos el asistente virtual de "Irigoyen Exchange", una casa de cambio que compra y vende USDT (Tether) contra guaraníes paraguayos.
+Cotización vigente: compramos USDT a ${rates.compra} Gs. y vendemos USDT a ${rates.venta} Gs. (última actualización: ${rates.updated || 'sin definir'}).
+Tu trabajo:
+- Responder dudas sobre cómo operar (contactar, confirmar cotización, transferir, recibir).
+- Calcular conversiones cuando el cliente pregunte cuánto recibe o cuánto paga, usando la cotización de arriba (compra si el cliente vende USDT, venta si el cliente compra USDT).
+- Ser breve, cálido y profesional, en español, tono directo. Máximo 4-5 líneas.
+- Si preguntan algo que no podés responder con certeza, sugerí confirmar por WhatsApp.
+- Nunca inventes una cotización distinta a la indicada arriba.`;
+
+  try{
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 400,
+        system: systemPrompt,
+        messages: chatHistory
+      })
+    });
+    const data = await response.json();
+    const textBlocks = (data.content || []).filter(b => b.type === 'text').map(b => b.text);
+    const reply = textBlocks.join('\n').trim() || 'No pude generar una respuesta. Probá de nuevo.';
+    typingEl.remove();
+    appendMsg(reply, 'bot');
+    chatHistory.push({ role:'assistant', content: reply });
+  }catch(e){
+    typingEl.remove();
+    appendMsg('Hubo un problema para responder. Probá de nuevo en un momento.', 'bot');
+  }
+}
+
+appendMsg('¡Hola! Soy el asistente de Irigoyen Exchange. Puedo explicarte cómo comprar o vender USDT y ayudarte con los cálculos. ¿En qué te ayudo?', 'bot');
+</script>
+</body>
+</html>
