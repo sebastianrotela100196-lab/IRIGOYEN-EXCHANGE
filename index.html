@@ -826,9 +826,8 @@ z-index:2;
 .money{
 position:absolute;
 font-weight:900;
-opacity:.16;
-filter:blur(.5px);
-animation:cryptoMove 16s infinite ease-in-out;
+opacity:.45;
+filter:blur(.3px);
 }
 
 .coin{
@@ -842,6 +841,7 @@ background:rgba(0,109,91,.15);
 border:1px solid rgba(184,134,11,.25);
 font-size:35px;
 color:#FDCC05;
+box-shadow:0 0 35px rgba(253,204,5,.35);
 }
 
 .money{
@@ -857,7 +857,6 @@ left:8%;
 .eth-float{
 top:35%;
 right:10%;
-animation-duration:22s;
 }
 
 .usdt-float{
@@ -903,22 +902,11 @@ bottom:10%;
 left:35%;
 }
 
-@keyframes cryptoMove{
-0%{
-transform:translateY(0) rotate(0deg);
-}
-25%{
-transform:translateY(-40px) rotate(10deg);
-}
-50%{
-transform:translateY(20px) rotate(-10deg);
-}
-75%{
-transform:translateY(-25px) rotate(5deg);
-}
-100%{
-transform:translateY(0) rotate(0deg);
-}
+.crypto-floating-bg .coin,
+.crypto-floating-bg .money{
+will-change:transform;
+opacity:.40;
+filter:blur(.3px) drop-shadow(0 0 35px currentColor);
 }
 
 
@@ -1175,7 +1163,7 @@ Binance P2P.
 <div class="hero-buttons">
 
 
-<button class="btn buy">
+<button class="btn buy" onclick="goMarket()">
 
 COMPRAR CRIPTOMONEDAS
 
@@ -2226,7 +2214,7 @@ color:#FDCC05;
 .ethereum-title{
 
 
-color:#00332A;
+color:#8A6CFF;
 
 
 }
@@ -2248,7 +2236,7 @@ color:#078F3D;
 .sol-title{
 
 
-color:#00332A;
+color:#00FFA3;
 
 
 }
@@ -2357,13 +2345,13 @@ box-shadow:0 0 45px #FDCC05;
 
 
 
-.ethereum{
+ .ethereum{
 
 
-background:#00332A;
+background:linear-gradient(135deg,#6C24DF,#8A92B2);
 
 
-box-shadow:0 0 45px #00332A;
+box-shadow:0 0 45px #6C24DF, 0 0 75px rgba(108,36,223,.55);
 
 
 }
@@ -2388,10 +2376,10 @@ box-shadow:0 0 45px #078F3D;
 .solana{
 
 
-background:#00332A;
+background:linear-gradient(135deg,#00FFA3,#03E1FF,#DC1FFF);
 
 
-box-shadow:0 0 45px #00332A;
+box-shadow:0 0 45px #03E1FF, 0 0 75px rgba(0,255,163,.55), 0 0 100px rgba(220,31,255,.4);
 
 
 }
@@ -5849,6 +5837,95 @@ behavior:"smooth"
 });
 
 }
+</script>
+
+
+<script>
+/* =====================================
+RANDOM CRYPTO FLOATING MOVEMENT
+Cada icono se mueve de forma independiente y aleatoria.
+Como maximo 2 iconos se mueven al mismo tiempo; el resto
+espera su turno y luego vuelve a moverse aleatoriamente.
+===================================== */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+const particles=Array.from(document.querySelectorAll(
+".crypto-floating-bg .coin, .crypto-floating-bg .money"
+));
+
+const MAX_CONCURRENT=2;
+
+let moving=0;
+
+const queue=[];
+
+function requestMove(particle){
+
+if(moving<MAX_CONCURRENT){
+
+startMove(particle);
+
+}else{
+
+queue.push(particle);
+
+}
+
+}
+
+function releaseSlot(){
+
+moving--;
+
+if(queue.length){
+
+const next=queue.shift();
+
+startMove(next);
+
+}
+
+}
+
+function startMove(particle){
+
+moving++;
+
+const x=(Math.random()*140)-70;
+const y=(Math.random()*140)-70;
+const rotate=(Math.random()*80)-40;
+const scale=.8+(Math.random()*0.5);
+
+const duration=9000+(Math.random()*12000);
+
+particle.style.transition=
+`transform ${duration}ms ease-in-out`;
+
+particle.style.transform=
+`translate(${x}vw,${y}vh) rotate(${rotate}deg) scale(${scale})`;
+
+setTimeout(()=>{
+
+releaseSlot();
+
+const restDelay=800+(Math.random()*3000);
+
+setTimeout(()=>requestMove(particle),restDelay);
+
+},duration);
+
+}
+
+particles.forEach((particle,index)=>{
+
+const initialDelay=(index*400)+(Math.random()*2000);
+
+setTimeout(()=>requestMove(particle),initialDelay);
+
+});
+
+});
 </script>
 
 </body>
