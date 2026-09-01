@@ -44,23 +44,23 @@ scroll-behavior:smooth;
 :root{
 
 
---red:#800020;
+--red:#C62828;
 
---blue:#0D1B3D;
+--blue:#00332A;
 
---green:#006D5B;
+--green:#078F3D;
 
---gold:#B8860B;
+--gold:#FDCC05;
 
---black:#111111;
+--black:#050807;
 
---card:#161616;
+--card:#0B1511;
 
 --border:#263238;
 
 --white:#FFFFFF;
 
---gray:#B2B1A9;
+--gray:#F9F5EA;
 
 
 }
@@ -223,7 +223,7 @@ gap:35px;
 .menu a{
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 text-decoration:none;
@@ -621,7 +621,7 @@ margin-bottom:30px;
 .quote-card{
 
 
-background:#111111;
+background:#050807;
 
 
 border:1px solid #263238;
@@ -826,7 +826,7 @@ z-index:2;
 .money{
 position:absolute;
 font-weight:900;
-opacity:.07;
+opacity:.16;
 filter:blur(.5px);
 animation:cryptoMove 16s infinite ease-in-out;
 }
@@ -841,12 +841,12 @@ justify-content:center;
 background:rgba(0,109,91,.15);
 border:1px solid rgba(184,134,11,.25);
 font-size:35px;
-color:#B8860B;
+color:#FDCC05;
 }
 
 .money{
 font-size:90px;
-color:#006D5B;
+color:#078F3D;
 }
 
 .btc-float{
@@ -1043,7 +1043,7 @@ Contacto
 
 
 
-<button class="btn buy">
+<button class="btn buy" onclick="goMarket()">
 
 
 OPERAR AHORA
@@ -1183,7 +1183,7 @@ COMPRAR CRIPTOMONEDAS
 
 
 
-<button class="btn sell">
+<button class="btn sell" onclick="goMarket()">
 
 VENDER CRIPTOMONEDAS
 
@@ -2076,7 +2076,7 @@ SOBRE
 .about-box{
 
 
-background:#161616;
+background:#0B1511;
 
 
 border:1px solid #263238;
@@ -2103,7 +2103,7 @@ font-size:20px;
 line-height:1.9;
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 }
@@ -2115,7 +2115,7 @@ color:#B2B1A9;
 .about-box strong{
 
 
-color:#006D5B;
+color:#078F3D;
 
 
 }
@@ -2156,7 +2156,7 @@ gap:20px;
 .crypto-card{
 
 
-background:#161616;
+background:#0B1511;
 
 
 border:1px solid #263238;
@@ -2186,7 +2186,7 @@ transition:.4s;
 transform:translateY(-10px);
 
 
-border-color:#B8860B;
+border-color:#FDCC05;
 
 
 box-shadow:0 15px 40px rgba(184,134,11,.15);
@@ -2216,7 +2216,7 @@ margin-top:10px;
 .bitcoin-title{
 
 
-color:#B8860B;
+color:#FDCC05;
 
 
 }
@@ -2226,7 +2226,7 @@ color:#B8860B;
 .ethereum-title{
 
 
-color:#0D1B3D;
+color:#00332A;
 
 
 }
@@ -2237,7 +2237,7 @@ color:#0D1B3D;
 .usdt-title{
 
 
-color:#006D5B;
+color:#078F3D;
 
 
 }
@@ -2248,7 +2248,7 @@ color:#006D5B;
 .sol-title{
 
 
-color:#0D1B3D;
+color:#00332A;
 
 
 }
@@ -2259,7 +2259,7 @@ color:#0D1B3D;
 .bnb-title{
 
 
-color:#B8860B;
+color:#FDCC05;
 
 
 }
@@ -2346,10 +2346,10 @@ transform:translateY(-18px);
 .bitcoin{
 
 
-background:#B8860B;
+background:#FDCC05;
 
 
-box-shadow:0 0 45px #B8860B;
+box-shadow:0 0 45px #FDCC05;
 
 
 }
@@ -2360,10 +2360,10 @@ box-shadow:0 0 45px #B8860B;
 .ethereum{
 
 
-background:#0D1B3D;
+background:#00332A;
 
 
-box-shadow:0 0 45px #0D1B3D;
+box-shadow:0 0 45px #00332A;
 
 
 }
@@ -2374,10 +2374,10 @@ box-shadow:0 0 45px #0D1B3D;
 .tether{
 
 
-background:#006D5B;
+background:#078F3D;
 
 
-box-shadow:0 0 45px #006D5B;
+box-shadow:0 0 45px #078F3D;
 
 
 }
@@ -2388,10 +2388,10 @@ box-shadow:0 0 45px #006D5B;
 .solana{
 
 
-background:#0D1B3D;
+background:#00332A;
 
 
-box-shadow:0 0 45px #0D1B3D;
+box-shadow:0 0 45px #00332A;
 
 
 }
@@ -2402,10 +2402,10 @@ box-shadow:0 0 45px #0D1B3D;
 .bnb{
 
 
-background:#B8860B;
+background:#FDCC05;
 
 
-box-shadow:0 0 45px #B8860B;
+box-shadow:0 0 45px #FDCC05;
 
 
 }
@@ -2418,7 +2418,7 @@ box-shadow:0 0 45px #B8860B;
 .crypto-price{
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 line-height:1.8;
@@ -2435,7 +2435,7 @@ line-height:1.8;
 display:block;
 
 
-color:#B8860B;
+color:#FDCC05;
 
 
 font-size:18px;
@@ -2486,7 +2486,7 @@ margin-bottom:15px;
 .section-title span{
 
 
-color:#006D5B;
+color:#078F3D;
 
 
 }
@@ -2501,7 +2501,7 @@ color:#006D5B;
 text-align:center;
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 font-size:18px;
@@ -2932,7 +2932,7 @@ CALCULADORA STYLE
 .calculator-box{
 
 
-background:#161616;
+background:#0B1511;
 
 
 border:1px solid #263238;
@@ -3006,7 +3006,7 @@ margin:30px 0;
 .crypto-select{
 
 
-background:#111111;
+background:#050807;
 
 
 border:1px solid #263238;
@@ -3039,7 +3039,7 @@ transition:.3s;
 .crypto-select:hover{
 
 
-border-color:#B8860B;
+border-color:#FDCC05;
 
 
 }
@@ -3053,10 +3053,10 @@ border-color:#B8860B;
 .crypto-select.active{
 
 
-background:#006D5B;
+background:#078F3D;
 
 
-border-color:#B8860B;
+border-color:#FDCC05;
 
 
 color:white;
@@ -3071,7 +3071,7 @@ color:white;
 .calculator-box label{
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 }
@@ -3086,7 +3086,7 @@ color:#B2B1A9;
 width:100%;
 
 
-background:#111111;
+background:#050807;
 
 
 border:1px solid #263238;
@@ -3127,7 +3127,7 @@ grid-template-columns:repeat(4,1fr);
 gap:20px;
 
 
-background:#111111;
+background:#050807;
 
 
 border:1px solid #263238;
@@ -3148,7 +3148,7 @@ padding:30px;
 .calculator-result span{
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 font-size:14px;
@@ -3163,7 +3163,7 @@ font-size:14px;
 .calculator-result h3{
 
 
-color:#B8860B;
+color:#FDCC05;
 
 
 font-size:22px;
@@ -4170,7 +4170,7 @@ gap:20px;
 .step-card{
 
 
-background:#161616;
+background:#0B1511;
 
 
 border:1px solid #263238;
@@ -4203,7 +4203,7 @@ transition:.3s;
 transform:translateY(-8px);
 
 
-border-color:#B8860B;
+border-color:#FDCC05;
 
 
 box-shadow:0 10px 30px rgba(184,134,11,.15);
@@ -4225,7 +4225,7 @@ box-shadow:0 10px 30px rgba(184,134,11,.15);
 .step-card h3{
 
 
-color:#006D5B;
+color:#078F3D;
 
 
 font-size:22px;
@@ -4251,7 +4251,7 @@ margin-bottom:15px;
 .step-card p{
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 line-height:1.7;
@@ -4274,7 +4274,7 @@ font-size:42px;
 font-weight:900;
 
 
-color:#B8860B;
+color:#FDCC05;
 
 
 margin-bottom:15px;
@@ -4877,7 +4877,7 @@ gap:20px;
 .step-card{
 
 
-background:#161616;
+background:#0B1511;
 
 
 border:1px solid #263238;
@@ -4906,7 +4906,7 @@ transition:.3s;
 transform:translateY(-8px);
 
 
-border-color:#B8860B;
+border-color:#FDCC05;
 
 
 box-shadow:0 10px 30px rgba(184,134,11,.15);
@@ -4924,7 +4924,7 @@ box-shadow:0 10px 30px rgba(184,134,11,.15);
 .step-card h3{
 
 
-color:#006D5B;
+color:#078F3D;
 
 
 font-size:22px;
@@ -4946,7 +4946,7 @@ margin-bottom:15px;
 .step-card p{
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 line-height:1.7;
@@ -4969,7 +4969,7 @@ font-size:42px;
 font-weight:900;
 
 
-color:#B8860B;
+color:#FDCC05;
 
 
 margin-bottom:15px;
@@ -5429,7 +5429,7 @@ CONTACTO
 .contact-box{
 
 
-background:#161616;
+background:#0B1511;
 
 
 border:1px solid #263238;
@@ -5471,7 +5471,7 @@ margin-bottom:20px;
 font-size:18px;
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 margin-bottom:35px;
@@ -5515,7 +5515,7 @@ gap:20px;
 .faq-card{
 
 
-background:#161616;
+background:#0B1511;
 
 
 border:1px solid #263238;
@@ -5539,7 +5539,7 @@ transition:.3s;
 .faq-card:hover{
 
 
-border-color:#B8860B;
+border-color:#FDCC05;
 
 
 transform:translateY(-5px);
@@ -5556,7 +5556,7 @@ transform:translateY(-5px);
 .faq-card h3{
 
 
-color:#006D5B;
+color:#078F3D;
 
 
 font-size:22px;
@@ -5574,7 +5574,7 @@ margin-bottom:15px;
 .faq-card p{
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 line-height:1.7;
@@ -5607,7 +5607,7 @@ right:30px;
 bottom:30px;
 
 
-background:#006D5B;
+background:#078F3D;
 
 
 color:white;
@@ -5645,7 +5645,7 @@ transition:.3s;
 .floating-whatsapp:hover{
 
 
-background:#B8860B;
+background:#FDCC05;
 
 
 }
@@ -5666,7 +5666,7 @@ FOOTER
 footer{
 
 
-background:#0D1B3D;
+background:#00332A;
 
 
 padding:70px 0;
@@ -5702,7 +5702,7 @@ letter-spacing:2px;
 footer h2 span{
 
 
-color:#006D5B;
+color:#078F3D;
 
 
 }
@@ -5714,7 +5714,7 @@ color:#006D5B;
 footer p{
 
 
-color:#B2B1A9;
+color:#F9F5EA;
 
 
 margin-top:15px;
@@ -5770,7 +5770,7 @@ transition:.3s;
 .footer-links a:hover{
 
 
-color:#B8860B;
+color:#FDCC05;
 
 
 }
@@ -5833,6 +5833,23 @@ flex-direction:column;
 
 
 
+
+
+<script>
+function goMarket(){
+
+document
+
+.getElementById("mercado")
+
+.scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+}
+</script>
 
 </body>
 
